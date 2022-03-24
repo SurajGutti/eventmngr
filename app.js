@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const gqlSchema = require('./graphql/schema/index');
 const gqlResolver = require('./graphql/resolvers/index');
+const isAuth = require('./middleware/is-auth');
 
 const { graphqlHTTP } = require('express-graphql');
 const {use} = require("express/lib/router");
@@ -11,6 +12,8 @@ const {use} = require("express/lib/router");
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use(isAuth);
 
 app.use('/graphql', graphqlHTTP({
     schema: gqlSchema,
